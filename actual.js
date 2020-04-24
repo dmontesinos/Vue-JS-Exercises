@@ -1,34 +1,27 @@
 //Ejercicio 9
-/* Hay que añadirlo al index.html
-<style>
-table { border-collapse: collapse; }
-table th,td { border: 1px solid black; }
-</style>
-*/
-
 var vm = new Vue({
   el: '#app',
   data: {
-    personas: [
-      { name: 'Jaime Sommers', phone: '311-555-2368' },
-      { name: 'Ghostbusters', phone: '55-2368' },
-      { name: 'Mr. Plow', phone: '636-555-3226' },
-      { name: 'Gene Parmesan: Private Eye', phone: '555-0113' },
-      { name: 'The A-Team', phone: '555-6162' },
-    ]
+    estado: 0,
   },
 
+  watch: {
+    estado: function() {
+      if(this.estado == 3){
+        this.estado = 0;
+      }
+    }
+  },
   template: `<div>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Phone number</th>
-    </tr>
-    <tr v-for="persona in personas">
-      <td>{{persona.name}}</td>
-      <td>{{persona.phone}}</td>
-    </tr>
-  </table>
+    <div style="display: inline-block; width:30px;">
+    <div v-if="estado == 0 || estado == 1" style="height: 30px; background-color: indianRed"></div>
+    <div v-if="estado == 2" style="height: 30px; background-color: red"></div>
+    <div v-if="estado == 0 || estado == 2" style="height: 30px; background-color: khaki"></div>
+    <div v-if="estado == 1" style="height: 30px; background-color: yellow"></div>
+    <div v-if="estado == 1 || estado == 2" style="height: 30px; background-color: seagreen"></div>
+    <div v-if="estado == 0" style="height: 30px; background-color: green"></div>
+    <button v-on:click="estado++"> Switch! </button>
     </div>
+  </div>
   `,
 })
