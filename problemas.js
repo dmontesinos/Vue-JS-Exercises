@@ -114,6 +114,23 @@ var vm = new Vue({
   `,
 })
 
+//FORMA 2 más compacta
+var vm = new Vue({
+  el: '#app',
+  data: {
+    cantidadRojo: 0,
+  },
+
+  template: `<div>
+    <div v-bind:style="'color: hsl(0, '+this.cantidadRojo+'%, 50%)'"> AM I RED? </div>
+    <input v-model="cantidadRojo" type="range" min="1" max="100">
+    <div v-if="cantidadRojo >= 70"> YES! </div>
+    </div>
+  `,
+})
+
+
+
 //Ejercicio 7
 var vm = new Vue({
   el: '#app',
@@ -239,3 +256,21 @@ var vm = new Vue({
     </div>
   `,
 })
+
+
+//Ejercicio 13 minuto 10 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Vue.component('swith-button', {
+  data: function(){
+    return { }
+  },
+  template: ``,
+});
+
+var vm = new Vue({
+  el: '#app',
+  data: {state:null},
+  template: .....
+})
+
+//Ejercicio 15 min 15 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
