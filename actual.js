@@ -1,4 +1,4 @@
-//Ejercicio 10
+//Ejercicio 11
 Vue.component('words-to-list', {
   data: function(){
     return {
