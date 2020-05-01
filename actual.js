@@ -1,34 +1,39 @@
-//Ejercicio 12
-Vue.component('card', {
+//Ejercicio 15
+Vue.component('magic-input', {
+  props: ['values'],
   data: function(){
     return {
-      person: {
-        name: 'My Name',
-        picture: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAY
-          AAAAfFcSJAAAADUlEQVR42mM82Mz1HwAFqgJP3gasfwAAAABJRU5ErkJggg==`,
-        email: 'me@somerandomdomain.com',
-        phone: '+00 00 000 0000',
-      }
+      magicText: '',
     };
   },
-  props: ['src'],
+  created: function() {
+    this.magicText = this.value.replace(/./g,
+        x => x.toUpperCase() == x ? x.toLowerCase() : x.toUpperCase());
+  },
+  watch: {
+    value: function() {
+      this.magicText = this.value.replace(/./g,
+          x => x.toUpperCase() == x ? x.toLowerCase() : x.toUpperCase());
+    },
+    magicText: function(){
+      this.$emit('input', this.magicText.replace(/./g,
+          x => x.toUpperCase() == x ? x.toLowerCase() : x.toUpperCase()));
+    }
+  },
+
   template: `
-  <div class="card">
-    <div>
-      <img v-bind:src="person.picture">
-    </div>
-    <div><h1>{{person.name}}</h1></div>
-    <div>{{person.email}}</div>
-    <div>{{person.phone}}</div>
-  </div>
+  <input v-model="magicText">
   `,
-})
+});
 
 var vm = new Vue({
   el: "#app",
+  data: { text: "Prueba" },
   template: `
-    <div style="display:flex;">
-      <card v-bind:personal-data="person"></card>
-    </div>
+  <div>
+    <magic-input v-model="text"></magic-input>
+    <input v-model="text">
+    {{text}}
+  </div>
   `,
 })

@@ -322,22 +322,85 @@ var vm = new Vue({
 })
 
 
-
-
-
-//Ejercicio 13 minuto 10 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-Vue.component('swith-button', {
+//Ejercicio 13
+Vue.component('switch-button', {
   data: function(){
-    return { }
+    return {
+      encendido: true,
+    };
   },
-  template: ``,
+  props: ['state'],
+  methods: {
+    cambiarEstado: function() {
+      if(this.encendido == true){
+        this.encendido = false;
+        //this.$emit('off') -> lo mismo que el emit en el template
+      } else {
+        this.encendido = true;
+        //this.$emit('on') -> lo mismo que el emit en el template
+      }
+    },
+  },
+  //@click -> v-on:click //Same
+  template: `
+    <div style="border:solid;">
+      <button v-bind:disabled="!encendido" @click="$emit('on')" @click="cambiarEstado()">ON</button>
+      <button v-bind:disabled="encendido" @click="$emit('off')" @click="cambiarEstado()">OFF</button>
+    </div>
+  `,
+})
+
+var vm = new Vue({
+  el: "#app",
+  data: { state: null },
+  template: `
+  <div>
+    <switch-button
+    v-on:on="state='just turned on'"
+    v-on:off="state='just turned off'">
+    </switch-button>{{state}}
+  </div>
+  `,
+})
+
+
+
+//Ejercicio 15
+Vue.component('magic-input', {
+  props: ['values'],
+  data: function(){
+    return {
+      magicText: '',
+    };
+  },
+  created: function() {
+    this.magicText = this.value.replace(/./g,
+        x => x.toUpperCase() == x ? x.toLowerCase() : x.toUpperCase());
+  },
+  watch: {
+    value: function() {
+      this.magicText = this.value.replace(/./g,
+          x => x.toUpperCase() == x ? x.toLowerCase() : x.toUpperCase());
+    },
+    magicText: function(){
+      this.$emit('input', this.magicText.replace(/./g,
+          x => x.toUpperCase() == x ? x.toLowerCase() : x.toUpperCase()));
+    }
+  },
+
+  template: `
+  <input v-model="magicText">
+  `,
 });
 
 var vm = new Vue({
-  el: '#app',
-  data: {state:null},
-  template: .....
+  el: "#app",
+  data: { text: "Prueba" },
+  template: `
+  <div>
+    <magic-input v-model="text"></magic-input>
+    <input v-model="text">
+    {{text}}
+  </div>
+  `,
 })
-
-//Ejercicio 15 min 15 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
